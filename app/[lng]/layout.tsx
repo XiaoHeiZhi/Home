@@ -1,6 +1,13 @@
 import "./globals.css";
 import { dir } from "i18next";
 import { languages } from "../i18n/settings";
+import type { Metadata } from "next";
+import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "Example component",
+  description: "Learning Next.js SEO",
+};
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({
@@ -48,7 +55,7 @@ export default function RootLayout({
         <div className="h-16 flex">
           <div className="w-1/6 flex items-center justify-center">
             <a href="https://druid.tech">
-              <img
+              <Image
                 src="https://druid.tech/wp-content/uploads/2020/09/cropped-LOGO_%E7%94%BB%E6%9D%BF-1.png"
                 alt="图片加载失败"
                 className="w-24 h-8"
@@ -59,7 +66,7 @@ export default function RootLayout({
             <ul className="flex flex-row-reverse h-16">
               {menu.map((item) => {
                 return (
-                  <a href={`/${item.path}`}>
+                  <a href={`/${item.path}`} key={item.path}>
                     <li
                       key={item.path}
                       className="text-center pt-5 pb-5 pl-4 pr-4 font-sans"

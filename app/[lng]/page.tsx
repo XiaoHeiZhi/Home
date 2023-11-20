@@ -1,12 +1,32 @@
-import Image1 from "../../public/img/1.jpg";
-import Image2 from "../../public/img/2.jpg";
-export default function Home() {
-  return (
-    <div>
-      <div>
-        <img src={Image1.src} />
-      </div>
-      <div></div>
-    </div>
+"use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
+async function getData() {
+  const res = await fetch(
+    "https://web-yapi.company.druidtech.net/mock/55/api/v2/label/"
   );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
+type Date = {
+  color: string;
+  count: number;
+  id: string;
+  name: string;
+};
+
+export default function Home() {
+  const [serverData, setServerData] = useState<Date>();
+  const setData = async () => {
+    const data = await getData();
+    setServerData(data);
+  };
+  useEffect(() => {
+    setData();
+  }, []);
+  return <div className="cursor-pointer">{serverData?.name}</div>;
 }
